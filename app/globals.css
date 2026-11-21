@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/* ── Tokens ───────────────────────────────────────────────── */
+:root {
+  --night: #141a3a;      /* kohl indigo village night */
+  --night-deep: #0e1230;
+  --turmeric: #e8a317;   /* primary: flame and turmeric */
+  --leaf: #2f6b3a;       /* banana leaf, used for every WhatsApp action */
+  --chilli: #b3261e;
+  --jaggery: #5a2e1a;
+  --coconut: #efe6cf;    /* text on night */
+  --coconut-dim: rgba(239, 230, 207, 0.72);
+
+  --display: "Abhaya Libre", "Noto Serif Sinhala", Georgia, serif;
+  --text: "Instrument Sans Variable", "Abhaya Libre", system-ui, sans-serif;
+  --journey: 0;
+}
+
+html[data-lang="si"] { --text: "Abhaya Libre", "Noto Sans Sinhala", system-ui, sans-serif; }
+
+html { background: var(--night); }
+body {
+  color: var(--coconut);
+  font-family: var(--text);
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+html[data-lang="si"] body { font-size: 1.15rem; line-height: 1.75; }
+/* Sinhala glyphs read smaller than Latin at the same size */
+html[data-lang="si"] :is(.nav > button, .hint, .btn, .brand__en, .float-chat, .field) { font-size: 1.08rem; }
+
+h1, h2, h3 { font-family: var(--display); font-weight: 800; line-height: 1.05; }
+
+:focus-visible { outline: 2px solid var(--turmeric); outline-offset: 3px; border-radius: 2px; }
+
+/* ── 3D layer ─────────────────────────────────────────────── */
+.scene { position: fixed; inset: 0; z-index: 0; }
+.wash {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at 50% 55%, #f2b92e 0%, #d98a12 40%, #9c3410 100%);
+}
+main, .header, .rail, .float-chat { position: relative; z-index: 2; }
+
+/* ── Header ───────────────────────────────────────────────── */
+.header {
+  position: fixed; inset: 0 0 auto 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.1rem clamp(1rem, 4vw, 3rem);
+  background: linear-gradient(to bottom, rgba(14, 18, 48, 0.85), transparent);
+}
+.brand { display: flex; align-items: baseline; gap: 0.6rem; color: var(--coconut); text-decoration: none; }
+.brand__si { font-family: var(--display); font-weight: 800; font-size: 1.9rem; color: var(--turmeric); line-height: 1; }
+.brand__en { font-size: 0.9rem; color: var(--coconut-dim); }
+.nav { display: flex; align-items: center; gap: clamp(0.6rem, 2vw, 1.6rem); }
+.nav > button:not(.btn) { color: var(--coconut); font-size: 0.95rem; cursor: pointer; }
+.nav > button:not(.btn):hover { color: var(--turmeric); }
+.lang { display: flex; border: 1px solid rgba(239, 230, 207, 0.3); border-radius: 2px; }
+.lang button { padding: 0.15rem 0.55rem; font-size: 0.85rem; color: var(--coconut-dim); cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--coconut); color: var(--night); }
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.85rem 1.4rem; border-radius: 2px;
+  background: var(--turmeric); color: var(--night-deep);
+  font-weight: 600; text-decoration: none; cursor: pointer;
+  box-shadow: 0 0 0 0 rgba(232, 163, 23, 0.4); transition: box-shadow 0.25s, transform 0.25s;
+}
+.btn:hover { box-shadow: 0 0 28px 2px rgba(232, 163, 23, 0.45); }
+.btn:active { transform: translateY(1px); }
+.btn--small { padding: 0.5rem 0.95rem; font-size: 0.92rem; }
+.btn--leaf { background: var(--leaf); color: var(--coconut); }
+.btn--leaf:hover { box-shadow: 0 0 28px 2px rgba(47, 107, 58, 0.6); }
+.btn--wide { width: 100%; margin-top: 0.5rem; }
+
+/* ── Story chapters ───────────────────────────────────────── */
+.chapter { min-height: 100vh; display: flex; align-items: center; padding: 6rem clamp(1.25rem, 8vw, 8rem); }
+.chapter--right { justify-content: flex-end; }
+.chapter__inner { position: relative; max-width: 30rem; text-shadow: 0 2px 24px rgba(14, 18, 48, 0.9); }
+.chapter__word {
+  position: absolute; z-index: -1; left: -0.04em; top: -0.62em;
+  font-family: var(--display); font-weight: 800; line-height: 1;
+  font-size: clamp(6rem, 20vw, 17rem); white-space: nowrap;
+  color: transparent; -webkit-text-stroke: 1.5px rgba(232, 163, 23, 0.42);
+  text-shadow: none; pointer-events: none; user-select: none;
+}
+.chapter--right .chapter__word { left: auto; right: -0.04em; }
+.chapter__title { font-size: clamp(2.2rem, 5vw, 3.6rem); color: var(--coconut); margin-bottom: 0.9rem; }
+.chapter__body { font-size: 1.2rem; color: var(--coconut-dim); max-width: 26rem; }
+.chapter__body + .btn { margin-top: 1.6rem; }
+
+/* opening chapter: the lamp. Text sits low-left, the flame owns the centre. */
+.chapter--lamp { align-items: flex-end; padding-bottom: 12vh; }
+.chapter--lamp .chapter__word { font-size: clamp(9rem, 32vw, 28rem); top: -0.75em; }
+.hero__title { font-size: clamp(4.2rem, 13vw, 10rem); color: var(--turmeric); letter-spacing: -0.01em; }
+.hero__body { font-size: clamp(1.2rem, 2vw, 1.5rem); max-width: 24rem; margin: 0.4rem 0 1.8rem; }
+.hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.2rem; }
+.hint { font-size: 0.92rem; color: var(--coconut-dim); }
+.hint::after { content: ""; display: inline-block; width: 1px; height: 1.4em; margin-left: 0.6rem; vertical-align: middle; background: var(--turmeric); animation: drip 2.4s ease-in-out infinite; transform-origin: top; }
+@keyframes drip { 0%, 100% { transform: scaleY(0.3); opacity: 0.4; } 50% { transform: scaleY(1); opacity: 1; } }
+
+/* ── Progress rail (the story is a sequence, so it gets a path) ── */
+.rail { position: fixed; z-index: 5; right: 1.6rem; top: 22vh; height: 56vh; width: 1px; background: rgba(239, 230, 207, 0.18); list-style: none; }
+.rail li { position: absolute; left: -3px; width: 7px; height: 7px; border-radius: 50%; border: 1px solid rgba(239, 230, 207, 0.4); background: var(--night); transform: translateY(-50%); }
+.rail li span { position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); white-space: nowrap; font-size: 0.8rem; color: var(--coconut-dim); opacity: 0; transition: opacity 0.2s; }
+.rail:hover li span { opacity: 1; }
+.rail__flame {
+  position: absolute; left: -5px; width: 11px; height: 11px; border-radius: 50%;
+  top: calc(var(--journey) * 100%); transform: translateY(-50%);
+  background: radial-gradient(circle, #fff3c4 0%, var(--turmeric) 45%, transparent 75%);
+  box-shadow: 0 0 14px 4px rgba(232, 163, 23, 0.55);
+}
+
+/* ── Panels after the journey ─────────────────────────────── */
+.panel { background: rgba(14, 18, 48, 0.93); backdrop-filter: blur(6px); padding: clamp(4rem, 9vw, 7.5rem) clamp(1.25rem, 8vw, 8rem); }
+.panel h2 { font-size: clamp(2.6rem, 6vw, 4.4rem); color: var(--turmeric); }
+
+.menu__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 3rem; }
+.menu__head p { color: var(--coconut-dim); max-width: 28rem; }
+.menu__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 3rem clamp(2rem, 4vw, 4rem); margin-bottom: 3rem; }
+.menu__section h3 { font-size: 1.6rem; margin-bottom: 1.2rem; padding-bottom: 0.6rem; border-bottom: 1px solid rgba(232, 163, 23, 0.35); }
+.menu__section li { margin-bottom: 1.35rem; }
+.dish { display: flex; align-items: baseline; gap: 0.5rem; }
+.dish__name { font-family: var(--display); font-weight: 600; font-size: 1.25rem; }
+.dish__lead { flex: 1; border-bottom: 1px dotted rgba(239, 230, 207, 0.35); transform: translateY(-0.3em); min-width: 1rem; }
+.dish__price { font-variant-numeric: tabular-nums; color: var(--turmeric); white-space: nowrap; }
+.dish__desc { color: var(--coconut-dim); font-size: 0.95rem; margin-top: 0.15rem; max-width: 34ch; }
+.veg { display: inline-block; width: 0.7em; height: 0.7em; margin-left: 0.45em; background: #5aa25a; border-radius: 0 100% 0 100%; vertical-align: 0.05em; }
+
+/* Booking: transparent so the lit table in the 3D scene shows beside the form */
+.booking { min-height: 100vh; display: flex; align-items: center; padding: 6rem clamp(1.25rem, 8vw, 8rem); }
+.booking__card { width: min(100%, 31rem); background: rgba(14, 18, 48, 0.9); border: 1px solid rgba(232, 163, 23, 0.28); padding: clamp(1.5rem, 3vw, 2.4rem); backdrop-filter: blur(8px); }
+.booking__card h2 { font-size: clamp(2.2rem, 4vw, 3rem); color: var(--turmeric); }
+.booking__intro { color: var(--coconut-dim); margin: 0.6rem 0 1.6rem; }
+.row { display: grid; grid-template-columns: 1.4fr 1fr 0.8fr; gap: 0.8rem; }
+.field { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; font-size: 0.92rem; color: var(--coconut-dim); }
+.field input, .field select, .field textarea {
+  background: rgba(239, 230, 207, 0.06); border: 1px solid rgba(239, 230, 207, 0.25); border-radius: 2px;
+  color: var(--coconut); padding: 0.65rem 0.75rem; font: inherit; font-size: 1rem; color-scheme: dark;
+}
+.field select option { background: var(--night); }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--turmeric); outline: none; box-shadow: 0 0 0 2px rgba(232, 163, 23, 0.35); }
+.field [aria-invalid="true"] { border-color: #e2584e; }
+.err { font-style: normal; color: #f08a80; font-size: 0.86rem; }
+.sent { margin-top: 1rem; color: #9fd39f; font-size: 0.95rem; }
+
+.visit { background: var(--night-deep); }
+.visit__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 2.5rem; margin: 2.5rem 0 4rem; }
+.visit h3 { font-size: 1.3rem; margin-bottom: 0.6rem; color: var(--coconut); }
+.visit p, .visit dd { color: var(--coconut-dim); }
+.visit a { color: var(--turmeric); text-underline-offset: 3px; }
+.visit dl div { display: flex; justify-content: space-between; gap: 1rem; max-width: 20rem; padding: 0.3rem 0; border-bottom: 1px dotted rgba(239, 230, 207, 0.2); }
+.social { display: flex; gap: 1.2rem; }
+.colophon { font-size: 0.85rem; color: rgba(239, 230, 207, 0.45); }
+
+.float-chat {
+  position: fixed; z-index: 20; right: 1.2rem; bottom: 1.2rem;
+  display: flex; align-items: center; gap: 0.45rem; padding: 0.7rem 1rem; border-radius: 999px;
+  background: var(--leaf); color: var(--coconut); text-decoration: none; font-weight: 600; font-size: 0.92rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ── Small screens ────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .nav > button:not(.btn) { display: none; }
+  .brand__en { display: none; }
+  .rail { display: none; }
+  .chapter, .chapter--right { justify-content: flex-start; align-items: flex-end; padding-bottom: 14vh; }
+  .chapter--right .chapter__word { right: auto; left: -0.04em; }
+  .row { grid-template-columns: 1fr 1fr; }
+  .row .field:first-child { grid-column: 1 / -1; }
+  .float-chat span { display: none; }
+  .booking { align-items: flex-end; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hint::after { animation: none; }
+  .btn { transition: none; }
+}
